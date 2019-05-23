@@ -1,5 +1,6 @@
-import React from 'react';
-import { StyleSheet, View, Text, Image } from 'react-native';
+import React from 'react'
+import { StyleSheet, View, Text, Image } from 'react-native'
+import Colors from '../constants/Colors'
 
 export default class TutorialWelcome extends React.Component {
   render() {
@@ -29,15 +30,17 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  title: { fontSize: 32, color: '#444' },
-  primary: {color: '#4193A4' },
+  title: { fontSize: 32, color: Colors.darkGrey },
+  primary: { color: Colors.primary },
   logo: {
     width: 100,
     height: 100,
     borderRadius: 10,
-    margin: 20
+    margin: 20,
   },
   text: {
-    fontSize: 18, color: '#444', textAlign: 'center'
-  }
-});
+    fontSize: 18,
+    color: Colors.darkGrey,
+    textAlign: 'center',
+  },
+})

@@ -7,6 +7,7 @@ import {
   Text,
   TouchableOpacity,
   AsyncStorage,
+  Image,
 } from 'react-native'
 
 import Colors from '../constants/Colors'
@@ -20,7 +21,7 @@ try {
   production = true
 }
 
-export default class Settings extends React.Component {
+export default class Login extends React.Component {
   static navigationOptions = {
     header: null,
   }
@@ -36,6 +37,33 @@ export default class Settings extends React.Component {
 
   componentDidMount() {
     this.retrieveUser()
+  }
+
+  login = async () => {
+    this.setState({
+      loading: true,
+      error: '',
+    })
+    const clientId = keys.googleID
+    const { type, accessToken, user } = await Google.logInAsync({ clientId })
+    try {
+      await AsyncStorage.setItem('@emailAddress', user.email)
+      await AsyncStorage.setItem('@accessToken', accessToken)
+
+      if (type === 'success') {
+        this.setState({
+          loading: false,
+          email: user.email,
+          error: '',
+        })
+      }
+    } catch (e) {
+      console.log('Error saving to async storage')
+      this.setState({
+        loading: false,
+        error: 'Errors saving to async storage.',
+      })
+    }
   }
 
   retrieveUser = async () => {
@@ -60,20 +88,18 @@ export default class Settings extends React.Component {
     }
   }
 
-  /* logout = async () => {
-    const clientId = '<YOUR_WEB_CLIENT_ID>'
-    const { type, accessToken } = await Google.logInAsync({ clientId })
-    await Google.logOutAsync({ clientId, accessToken })
-  } */
-
   render() {
     const { email, loading, error } = this.state
     return (
       <View style={styles.container}>
-        <TouchableOpacity style={styles.btn}>
-          <Text style={styles.btnText}>LOGOUT</Text>
+        <Image
+          source={require('../assets/images/logo.png')}
+          style={styles.logo}
+        />
+        <TouchableOpacity style={styles.btn} onPress={this.login}>
+          <Text style={styles.btnText}>LOGIN WITH GOOGLE</Text>
         </TouchableOpacity>
-        <Text>Signed in as {email}</Text>
+        <Text>{email}</Text>
         {loading && <Text>Loading...</Text>}
         {error !== '' && error}
       </View>
@@ -87,6 +113,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: Colors.primary,
+  },
+  logo: {
+    width: 100,
+    height: 100,
+    borderRadius: 10,
+    margin: 20,
   },
   btn: {
     margin: 20,

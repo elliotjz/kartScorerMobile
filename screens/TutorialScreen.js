@@ -1,21 +1,22 @@
-import React from 'react';
-import { StyleSheet, View, Text, Image, Button } from 'react-native';
+import React from 'react'
+import { StyleSheet, View, Text, Image, Button } from 'react-native'
 import Swiper from 'react-native-swiper'
 
 import TutorialWelcome from '../components/TutorialWelcome'
+import Colors from '../constants/Colors'
 
 export default class TutorialScreen extends React.Component {
   static navigationOptions = {
     header: null,
-  };
+  }
 
   render() {
     return (
       <Swiper
         loop={false}
         index={0}
-        activeDotColor="#4193A4"
-        showsButtons={true}
+        activeDotColor={Colors.primary}
+        showsButtons
         nextButton={<Text style={styles.buttonText}>›</Text>}
         prevButton={<Text style={styles.buttonText}>‹</Text>}
       >
@@ -25,53 +26,48 @@ export default class TutorialScreen extends React.Component {
         <View style={styles.container}>
           <Text style={styles.number}>1</Text>
           <Image
-            source={require("../assets/images/tutorial1.gif")}
+            source={require('../assets/images/tutorial1.gif')}
             style={[styles.img, styles.gif1]}
           />
           <Text style={styles.text}>
-            Start a new tournament or join a friend's tournament with their share code
+            Start a new tournament or join a friend's tournament with their
+            share code
           </Text>
         </View>
         <View style={styles.container}>
           <Text style={styles.number}>2</Text>
           <Image
-            source={require("../assets/images/tutorial2.gif")}
+            source={require('../assets/images/tutorial2.gif')}
             style={[styles.img, styles.gif2]}
           />
-          <Text style={styles.text}>
-            Add players to your tournament
-          </Text>
+          <Text style={styles.text}>Add players to your tournament</Text>
         </View>
         <View style={styles.container}>
           <Text style={styles.number}>3</Text>
           <Image
-            source={require("../assets/images/tutorial3.gif")}
+            source={require('../assets/images/tutorial3.gif')}
             style={[styles.img, styles.gif3]}
           />
-          <Text style={styles.text}>
-          Add the results of your races
-          </Text>
-        </View>    
+          <Text style={styles.text}>Add the results of your races</Text>
+        </View>
         <View style={styles.container}>
           <Text style={styles.number}>4</Text>
           <Image
-            source={require("../assets/images/tutorial4.gif")}
+            source={require('../assets/images/tutorial4.gif')}
             style={[styles.img, styles.gif4]}
           />
-          <Text style={styles.text}>
-            Look at your statistics and progress
-          </Text>
+          <Text style={styles.text}>Look at your statistics and progress</Text>
         </View>
         <View style={styles.container}>
-          <Button 
+          <Button
             onPress={() => {}}
             title="Get Started"
-            color="#4193A4"
+            color={Colors.primary}
             accessibilityLabel="Get started with the app"
           />
         </View>
       </Swiper>
-    );
+    )
   }
 }
 
@@ -80,15 +76,15 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#eee',
+    backgroundColor: Colors.white,
   },
   buttonText: {
     fontSize: 72,
-    color: '#4193A4',
+    color: Colors.primary,
   },
   number: {
     fontSize: 72,
-    color: '#4193A4',
+    color: Colors.primary,
   },
   img: {
     marginTop: 10,
@@ -111,6 +107,8 @@ const styles = StyleSheet.create({
     height: 450,
   },
   text: {
-    fontSize: 18, color: '#444', textAlign: 'center'
-  }
-});
+    fontSize: 18,
+    color: Colors.darkGrey,
+    textAlign: 'center',
+  },
+})
