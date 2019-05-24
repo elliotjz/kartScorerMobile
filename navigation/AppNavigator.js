@@ -8,6 +8,7 @@ import {
 import MainTabNavigator from './MainTabNavigator'
 import LoginScreen from '../screens/LoginScreen'
 import AuthLoadingScreen from '../screens/AuthLoadingScreen'
+import TutorialScreen from '../screens/TutorialScreen'
 
 const AuthStack = createStackNavigator({ Login: LoginScreen })
 export default createAppContainer(
@@ -16,6 +17,7 @@ export default createAppContainer(
       AuthLoading: AuthLoadingScreen,
       App: MainTabNavigator,
       Auth: AuthStack,
+      Tutorial: TutorialScreen,
     },
     {
       initialRouteName: 'AuthLoading',

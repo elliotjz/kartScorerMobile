@@ -18,13 +18,11 @@ export default class AuthLoadingScreen extends React.Component {
   }
 
   _bootstrapAsync = async () => {
-    setTimeout(async () => {
-      const userToken = await AsyncStorage.getItem('@accessToken')
+    const userToken = await AsyncStorage.getItem('@accessToken')
 
-      // This will switch to the App screen or Auth screen and this loading
-      // screen will be unmounted and thrown away.
-      this.props.navigation.navigate(userToken ? 'App' : 'Auth')
-    }, 2000)
+    // This will switch to the App screen or Auth screen and this loading
+    // screen will be unmounted and thrown away.
+    this.props.navigation.navigate(userToken ? 'App' : 'Auth')
   }
 
   render() {

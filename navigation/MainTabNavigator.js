@@ -7,13 +7,21 @@ import {
 
 import TabBarIcon from '../components/TabBarIcon'
 import HomeScreen from '../screens/HomeScreen'
-import TutorialScreen from '../screens/TutorialScreen'
-import LoginScreen from '../screens/LoginScreen'
 import SettingsScreen from '../screens/SettingsScreen'
 import Colors from '../constants/Colors'
+import TournamentScreen from '../screens/TournamentScreen'
+import AddData from '../components/AddData'
+import TournamentRecentRaces from '../components/TournamentRecentRaces'
+import TournamentSettings from '../components/TournamentSettings'
+import TournamentStats from '../components/TournamentStats'
 
 const HomeStack = createStackNavigator({
   Home: HomeScreen,
+  Tournament: TournamentScreen,
+  Add: AddData,
+  Recent: TournamentRecentRaces,
+  Settings: TournamentSettings,
+  Stats: TournamentStats,
 })
 
 HomeStack.navigationOptions = {
@@ -23,37 +31,9 @@ HomeStack.navigationOptions = {
       focused={focused}
       name={
         Platform.OS === 'ios'
-          ? `ios-information-circle${focused ? '' : '-outline'}`
-          : 'md-information-circle'
+          ? `ios-body${focused ? '' : '-outline'}`
+          : 'md-body'
       }
-    />
-  ),
-}
-
-const TutorialStack = createStackNavigator({
-  Tutorial: TutorialScreen,
-})
-
-TutorialStack.navigationOptions = {
-  tabBarLabel: 'Tutorial',
-  tabBarIcon: ({ focused }) => (
-    <TabBarIcon
-      focused={focused}
-      name={Platform.OS === 'ios' ? 'ios-link' : 'md-link'}
-    />
-  ),
-}
-
-const LoginStack = createStackNavigator({
-  Login: LoginScreen,
-})
-
-LoginStack.navigationOptions = {
-  tabBarLabel: 'Login',
-  tabBarIcon: ({ focused }) => (
-    <TabBarIcon
-      focused={focused}
-      name={Platform.OS === 'ios' ? 'ios-options' : 'md-options'}
     />
   ),
 }
@@ -74,8 +54,7 @@ SettingsStack.navigationOptions = {
 
 export default createBottomTabNavigator(
   {
-    LoginStack,
-    TutorialStack,
+    HomeStack,
     SettingsStack,
   },
   {

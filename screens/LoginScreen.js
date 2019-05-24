@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   AsyncStorage,
   Image,
+  ActivityIndicator,
 } from 'react-native'
 
 import Colors from '../constants/Colors'
@@ -29,14 +30,9 @@ export default class Login extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      email: 'nothing yet',
       loading: false,
       error: '',
     }
-  }
-
-  componentDidMount() {
-    this.retrieveUser()
   }
 
   login = async () => {
@@ -53,37 +49,15 @@ export default class Login extends React.Component {
       if (type === 'success') {
         this.setState({
           loading: false,
-          email: user.email,
           error: '',
         })
+        this.props.navigation.navigate('App')
       }
     } catch (e) {
       console.log('Error saving to async storage')
       this.setState({
         loading: false,
         error: 'Errors saving to async storage.',
-      })
-    }
-  }
-
-  retrieveUser = async () => {
-    this.setState({
-      loading: true,
-      error: '',
-    })
-    try {
-      const email = await AsyncStorage.getItem('@emailAddress')
-      if (email !== null) {
-        this.setState({
-          loading: false,
-          email,
-          error: '',
-        })
-      }
-    } catch (e) {
-      console.log('Error loading from async storage.')
-      this.setState({
-        error: 'Error loading from async storage.',
       })
     }
   }
@@ -100,7 +74,7 @@ export default class Login extends React.Component {
           <Text style={styles.btnText}>LOGIN WITH GOOGLE</Text>
         </TouchableOpacity>
         <Text>{email}</Text>
-        {loading && <Text>Loading...</Text>}
+        {loading && <ActivityIndicator size="large" color={Colors.white} />}
         {error !== '' && error}
       </View>
     )

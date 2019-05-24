@@ -60,17 +60,23 @@ export default class Settings extends React.Component {
     }
   }
 
-  /* logout = async () => {
-    const clientId = '<YOUR_WEB_CLIENT_ID>'
-    const { type, accessToken } = await Google.logInAsync({ clientId })
-    await Google.logOutAsync({ clientId, accessToken })
-  } */
+  logout = async () => {
+    await AsyncStorage.clear()
+    this.props.navigation.navigate('Auth')
+  }
+
+  showTutorial = () => {
+    this.props.navigation.navigate('Tutorial')
+  }
 
   render() {
     const { email, loading, error } = this.state
     return (
       <View style={styles.container}>
-        <TouchableOpacity style={styles.btn}>
+        <TouchableOpacity style={styles.btn} onPress={this.showTutorial}>
+          <Text style={styles.btnText}>Show Tutorial</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.btn} onPress={this.logout}>
           <Text style={styles.btnText}>LOGOUT</Text>
         </TouchableOpacity>
         <Text>Signed in as {email}</Text>
@@ -86,7 +92,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: Colors.primary,
+    backgroundColor: Colors.white,
   },
   btn: {
     margin: 20,
