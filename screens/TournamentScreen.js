@@ -1,5 +1,11 @@
 import React from 'react'
-import { StyleSheet, View, Text, ActivityIndicator } from 'react-native'
+import {
+  StyleSheet,
+  View,
+  Text,
+  ActivityIndicator,
+  ScrollView,
+} from 'react-native'
 
 import { comparePos, compareRaces, comparePlayerScores } from '../helpers'
 import Colors from '../constants/Colors'
@@ -11,7 +17,7 @@ const styles = StyleSheet.create({
     margin: 20,
   },
   error: {
-    color: Colors.errorText,
+    color: Colors.red,
   },
 })
 
@@ -188,7 +194,7 @@ export default class TournamentScreen extends React.Component {
                 </Text>
               </View>
             ) : (
-              <View style={styles.container}>
+              <ScrollView style={styles.container}>
                 <TournamentHeader
                   name={tournament.name}
                   code={tournament.code}
@@ -202,7 +208,7 @@ export default class TournamentScreen extends React.Component {
                   addPlayerCallback={this.addPlayerCallback}
                   navigation={navigation}
                 />
-              </View>
+              </ScrollView>
             )}
           </View>
         )}

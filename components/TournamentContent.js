@@ -2,26 +2,94 @@ import React from 'react'
 import { View, TouchableOpacity, Text, StyleSheet } from 'react-native'
 import Colors from '../constants/Colors'
 
+import AddPlayer from './AddPlayer'
+import AddRace from './AddRace'
+import TournamentStats from './TournamentStats'
+
 export default class TournamentContent extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      viewNumber: 0,
+    }
+  }
+
+  changeComponent = i => {
+    this.setState({
+      viewNumber: i,
+    })
+  }
+
   render() {
-    const { navigate } = this.props.navigation
+    const { viewNumber } = this.state
+    const {
+      playerScores,
+      tournament,
+      races,
+      updatedTournamentCallback,
+      updatedRacesCallback,
+      addPlayerCallback,
+      navigation,
+    } = this.props
+
     return (
       <View style={styles.container}>
-        <TouchableOpacity style={styles.btn} onPress={() => navigate('Add')}>
-          <Text style={styles.btnText}>Add</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.btn} onPress={() => navigate('Stats')}>
-          <Text style={styles.btnText}>Stats</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.btn} onPress={() => navigate('Recent')}>
-          <Text style={styles.btnText}>Recent Races</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.btn}
-          onPress={() => navigate('Settings')}
-        >
-          <Text style={styles.btnText}>Settings</Text>
-        </TouchableOpacity>
+        {viewNumber === 0 && (
+          <>
+            <TouchableOpacity
+              style={styles.btn}
+              onPress={() => this.changeComponent(1)}
+            >
+              <Text style={styles.btnText}>Add Race</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.btn}
+              onPress={() => this.changeComponent(2)}
+            >
+              <Text style={styles.btnText}>Add Player</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.btn}
+              onPress={() => this.changeComponent(3)}
+            >
+              <Text style={styles.btnText}>Stats</Text>
+            </TouchableOpacity>
+          </>
+        )}
+        {viewNumber === 1 && (
+          <AddRace
+            playerScores={playerScores}
+            tournament={tournament}
+            races={races}
+            updatedTournamentCallback={updatedTournamentCallback}
+            updatedRacesCallback={updatedRacesCallback}
+            addPlayerCallback={addPlayerCallback}
+            navigation={navigation}
+            changeComponent={this.changeComponent}
+          />
+        )}
+        {viewNumber === 2 && (
+          <AddPlayer
+            playerScores={playerScores}
+            tournament={tournament}
+            races={races}
+            updatedTournamentCallback={updatedTournamentCallback}
+            updatedRacesCallback={updatedRacesCallback}
+            addPlayerCallback={addPlayerCallback}
+            navigation={navigation}
+          />
+        )}
+        {viewNumber === 3 && (
+          <TournamentStats
+            playerScores={playerScores}
+            tournament={tournament}
+            races={races}
+            updatedTournamentCallback={updatedTournamentCallback}
+            updatedRacesCallback={updatedRacesCallback}
+            addPlayerCallback={addPlayerCallback}
+            navigation={navigation}
+          />
+        )}
       </View>
     )
   }

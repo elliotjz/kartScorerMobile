@@ -10,18 +10,10 @@ import HomeScreen from '../screens/HomeScreen'
 import SettingsScreen from '../screens/SettingsScreen'
 import Colors from '../constants/Colors'
 import TournamentScreen from '../screens/TournamentScreen'
-import AddData from '../components/AddData'
-import TournamentRecentRaces from '../components/TournamentRecentRaces'
-import TournamentSettings from '../components/TournamentSettings'
-import TournamentStats from '../components/TournamentStats'
 
 const HomeStack = createStackNavigator({
   Home: HomeScreen,
   Tournament: TournamentScreen,
-  Add: AddData,
-  Recent: TournamentRecentRaces,
-  Settings: TournamentSettings,
-  Stats: TournamentStats,
 })
 
 HomeStack.navigationOptions = {
