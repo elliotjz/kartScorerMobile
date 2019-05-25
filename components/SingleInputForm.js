@@ -30,7 +30,7 @@ const SingleInputForm = ({
     />
     {loading ? (
       <View style={styles.progressContainer}>
-        <ActivityIndicator size="large" color={Colors.white} />
+        <ActivityIndicator size="large" color={Colors.primary} />
       </View>
     ) : (
       <View>

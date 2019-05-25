@@ -8,6 +8,7 @@ import {
   AsyncStorage,
 } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
+import * as Animatable from 'react-native-animatable'
 
 import Colors from '../constants/Colors'
 import PlayerResultForm from './PlayerResultForm'
@@ -47,6 +48,7 @@ export default class AddRace extends React.Component {
 
   constructor(props) {
     super(props)
+    this.handleViewRef = ref => (this.view = ref)
     this.state = {
       numPlayers: 4,
       errorMessage: '',
@@ -94,7 +96,6 @@ export default class AddRace extends React.Component {
   }
 
   async sendRace(places) {
-    console.log('Sending race')
     this.setState({ loading: true, errorMessage: '' })
     try {
       const { code } = this.props.navigation.getParam('tournament')
@@ -166,7 +167,7 @@ export default class AddRace extends React.Component {
   }
 
   pulsePlusMinus() {
-    // TODO
+    this.view.rubberBand(1000)
   }
 
   render() {
@@ -196,7 +197,7 @@ export default class AddRace extends React.Component {
             {playerResultList}
 
             {loading ? (
-              <ActivityIndicator size="large" color={Colors.white} />
+              <ActivityIndicator size="large" color={Colors.primary} />
             ) : (
               <View>
                 {errorMessage !== '' && (
@@ -217,14 +218,16 @@ export default class AddRace extends React.Component {
                     style={styles.plusMinus}
                   />
                 </TouchableOpacity>
-                <TouchableOpacity onPress={this.removePlayer}>
-                  <Icon
-                    name="md-remove-circle-outline"
-                    size={40}
-                    color={Colors.black}
-                    style={styles.plusMinus}
-                  />
-                </TouchableOpacity>
+                <Animatable.View ref={this.handleViewRef}>
+                  <TouchableOpacity onPress={this.removePlayer}>
+                    <Icon
+                      name="md-remove-circle-outline"
+                      size={40}
+                      color={Colors.black}
+                      style={styles.plusMinus}
+                    />
+                  </TouchableOpacity>
+                </Animatable.View>
               </View>
               <Button onPress={this.submitRace} text="Add Race" />
             </View>
