@@ -5,6 +5,7 @@ import Colors from '../constants/Colors'
 import AddPlayer from './AddPlayer'
 import AddRace from './AddRace'
 import TournamentStats from './TournamentStats'
+import TournamentHeader from './TournamentHeader'
 
 export default class TournamentContent extends React.Component {
   constructor(props) {
@@ -25,46 +26,44 @@ export default class TournamentContent extends React.Component {
     const {
       playerScores,
       tournament,
-      races,
       updatedTournamentCallback,
       updatedRacesCallback,
       addPlayerCallback,
-      navigation,
     } = this.props
 
     return (
-      <View style={styles.container}>
+      <>
         {viewNumber === 0 && (
           <>
-            <TouchableOpacity
-              style={styles.btn}
-              onPress={() => this.changeComponent(1)}
-            >
-              <Text style={styles.btnText}>Add Race</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.btn}
-              onPress={() => this.changeComponent(2)}
-            >
-              <Text style={styles.btnText}>Add Player</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.btn}
-              onPress={() => this.changeComponent(3)}
-            >
-              <Text style={styles.btnText}>Stats</Text>
-            </TouchableOpacity>
+            <TournamentHeader name={tournament.name} code={tournament.code} />
+            <View style={styles.container}>
+              <TouchableOpacity
+                style={styles.btn}
+                onPress={() => this.changeComponent(1)}
+              >
+                <Text style={styles.btnText}>Add Race</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.btn}
+                onPress={() => this.changeComponent(2)}
+              >
+                <Text style={styles.btnText}>Add Player</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.btn}
+                onPress={() => this.changeComponent(3)}
+              >
+                <Text style={styles.btnText}>Stats</Text>
+              </TouchableOpacity>
+            </View>
           </>
         )}
         {viewNumber === 1 && (
           <AddRace
             playerScores={playerScores}
             tournament={tournament}
-            races={races}
             updatedTournamentCallback={updatedTournamentCallback}
             updatedRacesCallback={updatedRacesCallback}
-            addPlayerCallback={addPlayerCallback}
-            navigation={navigation}
             changeComponent={this.changeComponent}
           />
         )}
@@ -72,25 +71,13 @@ export default class TournamentContent extends React.Component {
           <AddPlayer
             playerScores={playerScores}
             tournament={tournament}
-            races={races}
             updatedTournamentCallback={updatedTournamentCallback}
             updatedRacesCallback={updatedRacesCallback}
             addPlayerCallback={addPlayerCallback}
-            navigation={navigation}
           />
         )}
-        {viewNumber === 3 && (
-          <TournamentStats
-            playerScores={playerScores}
-            tournament={tournament}
-            races={races}
-            updatedTournamentCallback={updatedTournamentCallback}
-            updatedRacesCallback={updatedRacesCallback}
-            addPlayerCallback={addPlayerCallback}
-            navigation={navigation}
-          />
-        )}
-      </View>
+        {viewNumber === 3 && <TournamentStats code={tournament.code} />}
+      </>
     )
   }
 }

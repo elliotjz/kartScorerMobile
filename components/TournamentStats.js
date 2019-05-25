@@ -1,13 +1,26 @@
 import React from 'react'
-import { View, Text } from 'react-native'
+import { WebView, View, Text, StyleSheet, Dimensions } from 'react-native'
 
 export default class TournamentStats extends React.Component {
   render() {
+    const { code } = this.props
+    const uri = `https://gomkart.herokuapp.com/chart?code=${code}`
     return (
-      <View>
-        {/* TODO: Make this a webview to herokuapp/chart */}
-        <Text>TournamentStats</Text>
-      </View>
+      <WebView
+        source={{ uri }}
+        style={styles.webView}
+        automaticallyAdjustContentInsets={false}
+      />
     )
   }
 }
+
+const styles = StyleSheet.create({
+  webView: {
+    flex: 1,
+    marginTop: 20,
+    marginBottom: 40,
+    paddingBottom: 40,
+    height: Dimensions.get('window').height - 200,
+  },
+})

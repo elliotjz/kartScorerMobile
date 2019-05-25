@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { View, StyleSheet, Text, AsyncStorage } from 'react-native'
 
 import SingleInputForm from './SingleInputForm'
-import { getQueryVariable, nameVerification } from '../helpers'
+import { nameVerification } from '../helpers'
 
 const styles = StyleSheet.create({
   addPlayerContainer: {
@@ -31,7 +31,6 @@ class AddPlayerForm extends Component {
 
   addNewPlayer = async () => {
     const { name } = this.state
-    console.log(`Submitting: ${name}`)
     const verification = nameVerification(name, this.props.playerScores)
     if (!verification.success) {
       this.setState({ errorMessage: verification.errorMessage })

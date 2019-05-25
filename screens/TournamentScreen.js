@@ -5,21 +5,12 @@ import {
   Text,
   ActivityIndicator,
   ScrollView,
+  StatusBar,
 } from 'react-native'
 
 import { comparePos, compareRaces, comparePlayerScores } from '../helpers'
 import Colors from '../constants/Colors'
-import TournamentHeader from '../components/TournamentHeader'
 import TournamentContent from '../components/TournamentContent'
-
-const styles = StyleSheet.create({
-  text: {
-    margin: 20,
-  },
-  error: {
-    color: Colors.red,
-  },
-})
 
 export default class TournamentScreen extends React.Component {
   static navigationOptions = {
@@ -194,11 +185,7 @@ export default class TournamentScreen extends React.Component {
                 </Text>
               </View>
             ) : (
-              <ScrollView style={styles.container}>
-                <TournamentHeader
-                  name={tournament.name}
-                  code={tournament.code}
-                />
+              <ScrollView>
                 <TournamentContent
                   playerScores={playerScores}
                   tournament={tournament}
@@ -216,3 +203,12 @@ export default class TournamentScreen extends React.Component {
     )
   }
 }
+
+const styles = StyleSheet.create({
+  text: {
+    margin: 20,
+  },
+  error: {
+    color: Colors.red,
+  },
+})
