@@ -1,26 +1,20 @@
 import React from 'react'
-import { WebView, View, Text, StyleSheet, Dimensions } from 'react-native'
+import { WebView, StyleSheet } from 'react-native'
 
 export default class TournamentStats extends React.Component {
+  static navigationOptions = {
+    title: 'Tournament Chart',
+  }
+
   render() {
-    const { code } = this.props
+    const code = this.props.navigation.getParam('code')
     const uri = `https://gomkart.herokuapp.com/chart?code=${code}`
-    return (
-      <WebView
-        source={{ uri }}
-        style={styles.webView}
-        automaticallyAdjustContentInsets={false}
-      />
-    )
+    return <WebView source={{ uri }} style={styles.webView} />
   }
 }
 
 const styles = StyleSheet.create({
   webView: {
     flex: 1,
-    marginTop: 20,
-    marginBottom: 40,
-    paddingBottom: 40,
-    height: Dimensions.get('window').height - 200,
   },
 })

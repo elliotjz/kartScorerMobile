@@ -4,21 +4,16 @@ import { View, StyleSheet, Text, AsyncStorage } from 'react-native'
 import SingleInputForm from './SingleInputForm'
 import { nameVerification } from '../helpers'
 
-const styles = StyleSheet.create({
-  addPlayerContainer: {
-    maxWidth: 200,
-    marginVertical: 30,
-    padding: 20,
-  },
-})
-
 class AddPlayerForm extends Component {
+  static navigationOptions = {
+    title: 'Add Player',
+  }
+
   constructor(props) {
     super(props)
     this.state = {
       loading: false,
       errorMessage: '',
-      successMessage: '',
       name: '',
     }
   }
@@ -31,15 +26,19 @@ class AddPlayerForm extends Component {
 
   addNewPlayer = async () => {
     const { name } = this.state
-    const verification = nameVerification(name, this.props.playerScores)
+    const playerScores = this.props.navigation.getParam('playerScores')
+    const verification = nameVerification(name, playerScores)
     if (!verification.success) {
       this.setState({ errorMessage: verification.errorMessage })
       return
     }
 
-    this.setState({ loading: true, errorMessage: '', successMessage: '' })
+    this.setState({ loading: true, errorMessage: '' })
     try {
-      const { code } = this.props.tournament
+      const { code } = this.props.navigation.getParam('tournament')
+      const addPlayerCallback = this.props.navigation.getParam(
+        'addPlayerCallback'
+      )
       const email = await AsyncStorage.getItem('@emailAddress')
       const res = await fetch('http://10.0.0.87:5000/api/add-player', {
         method: 'post',
@@ -57,33 +56,31 @@ class AddPlayerForm extends Component {
         this.setState({
           loading: false,
           errorMessage: '',
-          successMessage: 'Done!',
           name: '',
         })
-        this.props.addPlayerCallback(tournament)
-        setTimeout(() => this.setState({ successMessage: '' }), 5000)
+        addPlayerCallback(tournament)
+        this.props.navigation.goBack()
       }
     } catch (err) {
       this.setState({
         errorMessage: 'Error adding player',
         loading: false,
-        successMessage: '',
       })
     }
   }
 
   render() {
-    const { errorMessage, successMessage, loading, name } = this.state
+    const { errorMessage, loading, name } = this.state
 
     return (
       <View elevation={0} style={styles.addPlayerContainer}>
-        <Text>Add New Player</Text>
+        <Text style={styles.title}>Add New Player</Text>
         <SingleInputForm
           handleSubmit={this.addNewPlayer}
           inputLabel="Name"
           buttonLabel="Add"
           errorMessage={errorMessage}
-          successMessage={successMessage}
+          successMessage=""
           loading={loading}
           handleChange={this.handleChange}
           value={name}
@@ -95,8 +92,15 @@ class AddPlayerForm extends Component {
 
 export default AddPlayerForm
 
-/*
-Put under text Element
-
-
-*/
+const styles = StyleSheet.create({
+  addPlayerContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  title: {
+    margin: 10,
+    fontSize: 26,
+    textAlign: 'center',
+  },
+})

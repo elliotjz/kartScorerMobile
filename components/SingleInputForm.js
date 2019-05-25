@@ -27,7 +27,6 @@ const SingleInputForm = ({
       style={styles.textField}
       value={value}
       onChangeText={handleChange}
-      underlineColorAndroid={Colors.primary}
     />
     {loading ? (
       <View style={styles.progressContainer}>
@@ -73,6 +72,8 @@ const styles = StyleSheet.create({
     marginRight: 10,
     width: 200,
     marginTop: 19,
+    borderBottomColor: Colors.primary,
+    borderBottomWidth: 1,
   },
   btn: {
     margin: 20,

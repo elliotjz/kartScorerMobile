@@ -1,18 +1,6 @@
 import React from 'react'
-import { View, Text, StyleSheet, Picker } from 'react-native'
-
-const styles = StyleSheet.create({
-  root: {
-    flex: 1,
-    flexDirection: 'row',
-  },
-  namePicker: {
-    minWidth: 150,
-  },
-  posPicker: {
-    minWidth: 100,
-  },
-})
+import { View, StyleSheet, Picker } from 'react-native'
+import Colors from '../constants/Colors'
 
 export default class PlayerResultForm extends React.Component {
   render() {
@@ -54,3 +42,17 @@ export default class PlayerResultForm extends React.Component {
     )
   }
 }
+
+const styles = StyleSheet.create({
+  root: {
+    flexDirection: 'row',
+  },
+  namePicker: {
+    minWidth: 150,
+    color: Colors.darkGrey,
+  },
+  posPicker: {
+    minWidth: 100,
+    color: Colors.darkGrey,
+  },
+})

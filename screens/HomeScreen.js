@@ -65,7 +65,6 @@ export default class HomeScreen extends React.Component {
                 <View>
                   {tournaments && tournaments.length > 0 ? (
                     <View>
-                      <View style={styles.hr} />
                       {tournaments.map((tournament, index) => (
                         <TouchableOpacity
                           onPress={() =>
@@ -75,12 +74,9 @@ export default class HomeScreen extends React.Component {
                             })
                           }
                           key={index}
-                          style={styles.listLink}
+                          style={styles.btn}
                         >
-                          <Text style={styles.tournamentName}>
-                            {tournament.name}
-                          </Text>
-                          <View style={styles.hr} />
+                          <Text style={styles.btnText}>{tournament.name}</Text>
                         </TouchableOpacity>
                       ))}
                     </View>
@@ -132,11 +128,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontWeight: '500',
   },
-  tournamentName: {
-    textAlign: 'center',
-    margin: 8,
-    color: Colors.primary,
-  },
   btn: {
     margin: 20,
     backgroundColor: Colors.lightGrey,
@@ -150,12 +141,5 @@ const styles = StyleSheet.create({
   btnText: {
     fontSize: 16,
     textAlign: 'center',
-  },
-  listLink: {
-    margin: 5,
-  },
-  hr: {
-    borderBottomColor: Colors.lightGrey,
-    borderBottomWidth: 1,
   },
 })

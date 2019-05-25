@@ -5,14 +5,12 @@ import {
   ActivityIndicator,
   StyleSheet,
   TouchableOpacity,
-  TabBarIcon,
   AsyncStorage,
 } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 
 import Colors from '../constants/Colors'
 import PlayerResultForm from './PlayerResultForm'
-import { getQueryVariable } from '../helpers'
 
 const formDataReset = {
   player0: '',
@@ -41,9 +39,9 @@ const formDataReset = {
   player11Pos: '',
 }
 
-export default class AddData extends React.Component {
+export default class AddRace extends React.Component {
   static navigationOptions = {
-    title: 'Add Data',
+    title: 'Add Race',
   }
 
   constructor(props) {
@@ -63,8 +61,6 @@ export default class AddData extends React.Component {
         ...prevState.formData,
         [name]: value,
       }
-      console.log('Form Data')
-      console.log(formData)
       return { formData, successMessage: '' }
     })
   }
@@ -100,7 +96,14 @@ export default class AddData extends React.Component {
     console.log('Sending race')
     this.setState({ loading: true, errorMessage: '' })
     try {
-      const { code } = this.props.tournament
+      const { code } = this.props.navigation.getParam('tournament')
+      const updatedRacesCallback = this.props.navigation.getParam(
+        'updatedRacesCallback'
+      )
+      const updatedTournamentCallback = this.props.navigation.getParam(
+        'updatedTournamentCallback'
+      )
+      // const { code } = this.props.tournament
       const email = await AsyncStorage.getItem('@emailAddress')
       const res = await fetch(`http://10.0.0.87:5000/api/add-race`, {
         method: 'post',
@@ -108,7 +111,6 @@ export default class AddData extends React.Component {
         body: JSON.stringify({ places, code, email }),
       })
       const resData = await res.json()
-      console.log(resData)
 
       if (resData.error) {
         this.setState({
@@ -122,9 +124,9 @@ export default class AddData extends React.Component {
           loading: false,
           formData: formDataReset,
         })
-        this.props.updatedRacesCallback(resData.races)
-        this.props.updatedTournamentCallback(resData.tournament)
-        this.props.changeComponent(3)
+        updatedRacesCallback(resData.races)
+        updatedTournamentCallback(resData.tournament)
+        this.props.navigation.goBack()
       }
     } catch (err) {
       console.log(err)
@@ -161,7 +163,7 @@ export default class AddData extends React.Component {
   }
 
   render() {
-    const { playerScores } = this.props
+    const playerScores = this.props.navigation.getParam('playerScores')
     const { errorMessage, successMessage, loading } = this.state
     const players = playerScores.map(player => player[0])
     const playerResultList = []
@@ -180,64 +182,69 @@ export default class AddData extends React.Component {
       )
     }
     return (
-      <View>
+      <>
         {players.length > 0 && (
-          <View style={styles.addRaceContainer}>
+          <View style={styles.container}>
             <Text style={styles.title}>Add New Race</Text>
-            <View>
-              {playerResultList}
-              {loading ? (
-                <ActivityIndicator size="large" color={Colors.white} />
-              ) : (
-                <View>
-                  {errorMessage !== '' && (
-                    <Text style={styles.errorMessage}>{errorMessage}</Text>
-                  )}
-                  {successMessage !== '' && (
-                    <Text style={styles.successMessage}>{successMessage}</Text>
-                  )}
-                </View>
-              )}
-              <View style={styles.buttonContainer}>
-                <View style={styles.plusMinusContainer}>
-                  <TouchableOpacity onPress={this.addPlayer}>
-                    <Icon
-                      name="md-add-circle-outline"
-                      size={40}
-                      color={Colors.black}
-                      style={styles.plusMinus}
-                    />
-                  </TouchableOpacity>
-                  <TouchableOpacity onPress={this.removePlayer}>
-                    <Icon
-                      name="md-remove-circle-outline"
-                      size={40}
-                      color={Colors.black}
-                      style={styles.plusMinus}
-                    />
-                  </TouchableOpacity>
-                </View>
-                <TouchableOpacity style={styles.btn} onPress={this.submitRace}>
-                  <Text style={styles.btnText}>Add Race</Text>
+            {playerResultList}
+
+            {loading ? (
+              <ActivityIndicator size="large" color={Colors.white} />
+            ) : (
+              <View>
+                {errorMessage !== '' && (
+                  <Text style={styles.errorMessage}>{errorMessage}</Text>
+                )}
+                {successMessage !== '' && (
+                  <Text style={styles.successMessage}>{successMessage}</Text>
+                )}
+              </View>
+            )}
+            <View style={styles.buttonContainer}>
+              <View style={styles.plusMinusContainer}>
+                <TouchableOpacity onPress={this.addPlayer}>
+                  <Icon
+                    name="md-add-circle-outline"
+                    size={40}
+                    color={Colors.black}
+                    style={styles.plusMinus}
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity onPress={this.removePlayer}>
+                  <Icon
+                    name="md-remove-circle-outline"
+                    size={40}
+                    color={Colors.black}
+                    style={styles.plusMinus}
+                  />
                 </TouchableOpacity>
               </View>
+              <TouchableOpacity style={styles.btn} onPress={this.submitRace}>
+                <Text style={styles.btnText}>Add Race</Text>
+              </TouchableOpacity>
             </View>
           </View>
         )}
-      </View>
+      </>
     )
   }
 }
 
 const styles = StyleSheet.create({
-  root: {
+  container: {
     flex: 1,
+    padding: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   title: {
+    margin: 10,
     fontSize: 26,
+    textAlign: 'center',
   },
-  addRaceContainer: {
-    padding: 20,
+  playerResultsContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   buttonContainer: {
     marginTop: 15,

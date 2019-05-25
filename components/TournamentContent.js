@@ -15,12 +15,6 @@ export default class TournamentContent extends React.Component {
     }
   }
 
-  changeComponent = i => {
-    this.setState({
-      viewNumber: i,
-    })
-  }
-
   render() {
     const { viewNumber } = this.state
     const {
@@ -29,54 +23,49 @@ export default class TournamentContent extends React.Component {
       updatedTournamentCallback,
       updatedRacesCallback,
       addPlayerCallback,
+      navigation,
     } = this.props
 
     return (
       <>
-        {viewNumber === 0 && (
-          <>
-            <TournamentHeader name={tournament.name} code={tournament.code} />
-            <View style={styles.container}>
-              <TouchableOpacity
-                style={styles.btn}
-                onPress={() => this.changeComponent(1)}
-              >
-                <Text style={styles.btnText}>Add Race</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.btn}
-                onPress={() => this.changeComponent(2)}
-              >
-                <Text style={styles.btnText}>Add Player</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.btn}
-                onPress={() => this.changeComponent(3)}
-              >
-                <Text style={styles.btnText}>Stats</Text>
-              </TouchableOpacity>
-            </View>
-          </>
-        )}
-        {viewNumber === 1 && (
-          <AddRace
-            playerScores={playerScores}
-            tournament={tournament}
-            updatedTournamentCallback={updatedTournamentCallback}
-            updatedRacesCallback={updatedRacesCallback}
-            changeComponent={this.changeComponent}
-          />
-        )}
-        {viewNumber === 2 && (
-          <AddPlayer
-            playerScores={playerScores}
-            tournament={tournament}
-            updatedTournamentCallback={updatedTournamentCallback}
-            updatedRacesCallback={updatedRacesCallback}
-            addPlayerCallback={addPlayerCallback}
-          />
-        )}
-        {viewNumber === 3 && <TournamentStats code={tournament.code} />}
+        <TournamentHeader name={tournament.name} code={tournament.code} />
+        <View style={styles.container}>
+          <TouchableOpacity
+            style={styles.btn}
+            onPress={() =>
+              navigation.navigate('AddRace', {
+                tournament,
+                updatedRacesCallback,
+                updatedTournamentCallback,
+                playerScores,
+              })
+            }
+          >
+            <Text style={styles.btnText}>Add Race</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.btn}
+            onPress={() =>
+              navigation.navigate('AddPlayer', {
+                playerScores,
+                tournament,
+                addPlayerCallback,
+              })
+            }
+          >
+            <Text style={styles.btnText}>Add Player</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.btn}
+            onPress={() =>
+              navigation.navigate('Stats', {
+                code: tournament.code,
+              })
+            }
+          >
+            <Text style={styles.btnText}>Stats</Text>
+          </TouchableOpacity>
+        </View>
       </>
     )
   }
@@ -89,13 +78,15 @@ const styles = StyleSheet.create({
     margin: 30,
   },
   btn: {
-    backgroundColor: Colors.lightGrey,
+    backgroundColor: Colors.white,
     padding: 10,
+    margin: 5,
     width: 250,
-    borderBottomColor: Colors.darkGrey,
-    borderBottomWidth: 1,
+    borderBottomColor: Colors.lightGrey,
+    borderRadius: 2,
   },
   btnText: {
+    color: Colors.primary,
     fontSize: 22,
     textAlign: 'center',
   },
