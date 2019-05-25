@@ -3,11 +3,12 @@ import {
   StyleSheet,
   View,
   Text,
-  TouchableOpacity,
   ActivityIndicator,
   AsyncStorage,
 } from 'react-native'
+
 import Colors from '../constants/Colors'
+import Button from '../components/Button'
 
 export default class HomeScreen extends React.Component {
   static navigationOptions = {
@@ -57,16 +58,16 @@ export default class HomeScreen extends React.Component {
       <View style={styles.container}>
         {error === '' ? (
           <View>
-            <View>
+            <View style={styles.btnContainer}>
               <Text style={styles.title}>Tournaments</Text>
               {loading ? (
                 <ActivityIndicator size="large" color={Colors.primary} />
               ) : (
-                <View>
+                <>
                   {tournaments && tournaments.length > 0 ? (
-                    <View>
+                    <>
                       {tournaments.map((tournament, index) => (
-                        <TouchableOpacity
+                        <Button
                           onPress={() =>
                             navigate('Tournament', {
                               code: tournament.code,
@@ -74,34 +75,27 @@ export default class HomeScreen extends React.Component {
                             })
                           }
                           key={index}
-                          style={styles.btn}
-                        >
-                          <Text style={styles.btnText}>{tournament.name}</Text>
-                        </TouchableOpacity>
+                          text={tournament.name}
+                          listBtn
+                        />
                       ))}
-                    </View>
+                    </>
                   ) : (
                     <View>
                       <Text>You don't have any tournaments yet.</Text>
                     </View>
                   )}
-                </View>
+                </>
               )}
-              <View>
-                <TouchableOpacity
-                  style={styles.btn}
+              <View style={styles.mainButtons}>
+                <Button
                   onPress={() => console.log('click')}
-                >
-                  <Text style={styles.btnText}>New Tournament</Text>
-                </TouchableOpacity>
-              </View>
-              <View style={styles.buttonContainer}>
-                <TouchableOpacity
-                  style={styles.btn}
+                  text="New Tournament"
+                />
+                <Button
                   onPress={() => console.log('click')}
-                >
-                  <Text style={styles.btnText}>Join Tournament</Text>
-                </TouchableOpacity>
+                  text="Join Tournament"
+                />
               </View>
             </View>
           </View>
@@ -123,23 +117,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   title: {
-    fontSize: 20,
     margin: 10,
+    fontSize: 26,
     textAlign: 'center',
-    fontWeight: '500',
   },
-  btn: {
-    margin: 20,
-    backgroundColor: Colors.lightGrey,
-    padding: 10,
-    borderRadius: 5,
-    width: 200,
-    shadowOffset: { width: 10, height: 10 },
-    shadowColor: 'black',
-    shadowOpacity: 1.0,
+  btnContainer: {
+    justifyContent: 'center',
   },
-  btnText: {
-    fontSize: 16,
-    textAlign: 'center',
+  mainButtons: {
+    marginTop: 20,
   },
 })

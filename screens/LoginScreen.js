@@ -5,13 +5,13 @@ import {
   View,
   StyleSheet,
   Text,
-  TouchableOpacity,
   AsyncStorage,
   Image,
   ActivityIndicator,
 } from 'react-native'
 
 import Colors from '../constants/Colors'
+import Button from '../components/Button'
 
 let keys
 let production
@@ -70,9 +70,7 @@ export default class Login extends React.Component {
           source={require('../assets/images/logo.png')}
           style={styles.logo}
         />
-        <TouchableOpacity style={styles.btn} onPress={this.login}>
-          <Text style={styles.btnText}>LOGIN WITH GOOGLE</Text>
-        </TouchableOpacity>
+        <Button onPress={this.login} text="LOGIN WITH GOOGLE" />
         <Text>{email}</Text>
         {loading && <ActivityIndicator size="large" color={Colors.white} />}
         {error !== '' && error}
@@ -93,19 +91,5 @@ const styles = StyleSheet.create({
     height: 100,
     borderRadius: 10,
     margin: 20,
-  },
-  btn: {
-    margin: 20,
-    backgroundColor: Colors.lightGrey,
-    padding: 10,
-    borderRadius: 5,
-    width: 200,
-    shadowOffset: { width: 10, height: 10 },
-    shadowColor: 'black',
-    shadowOpacity: 1.0,
-  },
-  btnText: {
-    fontSize: 16,
-    textAlign: 'center',
   },
 })

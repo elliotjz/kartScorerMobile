@@ -1,22 +1,11 @@
 import React from 'react'
-import { View, TouchableOpacity, Text, StyleSheet } from 'react-native'
-import Colors from '../constants/Colors'
+import { View, StyleSheet } from 'react-native'
 
-import AddPlayer from './AddPlayer'
-import AddRace from './AddRace'
-import TournamentStats from './TournamentStats'
 import TournamentHeader from './TournamentHeader'
+import Button from './Button'
 
 export default class TournamentContent extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      viewNumber: 0,
-    }
-  }
-
   render() {
-    const { viewNumber } = this.state
     const {
       playerScores,
       tournament,
@@ -30,8 +19,7 @@ export default class TournamentContent extends React.Component {
       <>
         <TournamentHeader name={tournament.name} code={tournament.code} />
         <View style={styles.container}>
-          <TouchableOpacity
-            style={styles.btn}
+          <Button
             onPress={() =>
               navigation.navigate('AddRace', {
                 tournament,
@@ -40,11 +28,9 @@ export default class TournamentContent extends React.Component {
                 playerScores,
               })
             }
-          >
-            <Text style={styles.btnText}>Add Race</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.btn}
+            text="Add Race"
+          />
+          <Button
             onPress={() =>
               navigation.navigate('AddPlayer', {
                 playerScores,
@@ -52,19 +38,16 @@ export default class TournamentContent extends React.Component {
                 addPlayerCallback,
               })
             }
-          >
-            <Text style={styles.btnText}>Add Player</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.btn}
+            text="Add Player"
+          />
+          <Button
             onPress={() =>
-              navigation.navigate('Stats', {
+              navigation.navigate('Chart', {
                 code: tournament.code,
               })
             }
-          >
-            <Text style={styles.btnText}>Stats</Text>
-          </TouchableOpacity>
+            text="Tournament Chart"
+          />
         </View>
       </>
     )
@@ -76,18 +59,5 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     margin: 30,
-  },
-  btn: {
-    backgroundColor: Colors.white,
-    padding: 10,
-    margin: 5,
-    width: 250,
-    borderBottomColor: Colors.lightGrey,
-    borderRadius: 2,
-  },
-  btnText: {
-    color: Colors.primary,
-    fontSize: 22,
-    textAlign: 'center',
   },
 })

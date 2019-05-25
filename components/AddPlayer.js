@@ -3,6 +3,7 @@ import { View, StyleSheet, Text, AsyncStorage } from 'react-native'
 
 import SingleInputForm from './SingleInputForm'
 import { nameVerification } from '../helpers'
+import Colors from '../constants/Colors'
 
 class AddPlayerForm extends Component {
   static navigationOptions = {
@@ -95,6 +96,7 @@ export default AddPlayerForm
 const styles = StyleSheet.create({
   addPlayerContainer: {
     flex: 1,
+    backgroundColor: Colors.white,
     justifyContent: 'center',
     alignItems: 'center',
   },

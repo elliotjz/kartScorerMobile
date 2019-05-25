@@ -1,15 +1,9 @@
 import React from 'react'
-import { Google } from 'expo'
 
-import {
-  View,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  AsyncStorage,
-} from 'react-native'
+import { View, StyleSheet, Text, AsyncStorage } from 'react-native'
 
 import Colors from '../constants/Colors'
+import Button from '../components/Button'
 
 let keys
 let production
@@ -65,20 +59,13 @@ export default class Settings extends React.Component {
     this.props.navigation.navigate('Auth')
   }
 
-  showTutorial = () => {
-    this.props.navigation.navigate('Tutorial')
-  }
-
   render() {
     const { email, loading, error } = this.state
+    const { navigate } = this.props.navigation
     return (
       <View style={styles.container}>
-        <TouchableOpacity style={styles.btn} onPress={this.showTutorial}>
-          <Text style={styles.btnText}>Show Tutorial</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.btn} onPress={this.logout}>
-          <Text style={styles.btnText}>LOGOUT</Text>
-        </TouchableOpacity>
+        <Button onPress={() => navigate('Tutorial')} text="Show Tutorial" />
+        <Button onPress={this.logout} text="Logout" />
         <Text>Signed in as {email}</Text>
         {loading && <Text>Loading...</Text>}
         {error !== '' && error}
@@ -93,19 +80,5 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: Colors.white,
-  },
-  btn: {
-    margin: 20,
-    backgroundColor: Colors.lightGrey,
-    padding: 10,
-    borderRadius: 5,
-    width: 200,
-    shadowOffset: { width: 10, height: 10 },
-    shadowColor: 'black',
-    shadowOpacity: 1.0,
-  },
-  btnText: {
-    fontSize: 16,
-    textAlign: 'center',
   },
 })

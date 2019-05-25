@@ -1,6 +1,7 @@
 const primary = '#4193A4'
 const darkGrey = '#444'
 const lightGrey = '#ccc'
+const veryLightGrey = '#e0e0e0'
 const black = '#000'
 const white = '#eee'
 const transparentBlack = 'rgba(0, 0, 0, 0.4)'
@@ -23,4 +24,5 @@ export default {
   white,
   transparentBlack,
   transparentGrey,
+  veryLightGrey,
 }

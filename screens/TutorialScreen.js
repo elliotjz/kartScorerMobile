@@ -1,9 +1,10 @@
 import React from 'react'
-import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native'
+import { StyleSheet, View, Text, Image } from 'react-native'
 import Swiper from 'react-native-swiper'
 
 import TutorialWelcome from '../components/TutorialWelcome'
 import Colors from '../constants/Colors'
+import Button from '../components/Button'
 
 export default class TutorialScreen extends React.Component {
   static navigationOptions = {
@@ -63,9 +64,7 @@ export default class TutorialScreen extends React.Component {
           <Text style={styles.text}>Look at your statistics and progress</Text>
         </View>
         <View style={styles.container}>
-          <TouchableOpacity style={styles.btn} onPress={this.getStarted}>
-            <Text style={styles.btnText}>GET STARTED</Text>
-          </TouchableOpacity>
+          <Button onPress={this.getStarted} text="Get Started" />
         </View>
       </Swiper>
     )
@@ -110,20 +109,6 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 18,
     color: Colors.darkGrey,
-    textAlign: 'center',
-  },
-  btn: {
-    margin: 20,
-    backgroundColor: Colors.lightGrey,
-    padding: 10,
-    borderRadius: 5,
-    width: 200,
-    shadowOffset: { width: 10, height: 10 },
-    shadowColor: 'black',
-    shadowOpacity: 1.0,
-  },
-  btnText: {
-    fontSize: 16,
     textAlign: 'center',
   },
 })

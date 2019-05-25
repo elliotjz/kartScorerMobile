@@ -168,7 +168,7 @@ export default class TournamentScreen extends React.Component {
       tournament !== undefined && Object.keys(tournament).length > 0
 
     return (
-      <View>
+      <View style={styles.container}>
         {loading ? (
           <View>
             <ActivityIndicator color={Colors.primary} size="large" />
@@ -205,6 +205,10 @@ export default class TournamentScreen extends React.Component {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    backgroundColor: Colors.white,
+    flex: 1,
+  },
   text: {
     margin: 20,
   },

@@ -11,6 +11,7 @@ import Icon from 'react-native-vector-icons/Ionicons'
 
 import Colors from '../constants/Colors'
 import PlayerResultForm from './PlayerResultForm'
+import Button from './Button'
 
 const formDataReset = {
   player0: '',
@@ -142,7 +143,9 @@ export default class AddRace extends React.Component {
     let errorMessage = ''
     if (name === '') {
       // Race position wasn't filled in
-      errorMessage = 'Please complete all inputs.'
+      errorMessage =
+        'Please complete all inputs.\nOr press minus to remove a row.'
+      this.pulsePlusMinus()
     } else if (position === '') {
       // Player doesn't have a position
       errorMessage = 'Every player must have a position'
@@ -160,6 +163,10 @@ export default class AddRace extends React.Component {
       errorMessage: '',
     })
     return true
+  }
+
+  pulsePlusMinus() {
+    // TODO
   }
 
   render() {
@@ -219,9 +226,7 @@ export default class AddRace extends React.Component {
                   />
                 </TouchableOpacity>
               </View>
-              <TouchableOpacity style={styles.btn} onPress={this.submitRace}>
-                <Text style={styles.btnText}>Add Race</Text>
-              </TouchableOpacity>
+              <Button onPress={this.submitRace} text="Add Race" />
             </View>
           </View>
         )}
@@ -233,6 +238,7 @@ export default class AddRace extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: Colors.white,
     padding: 20,
     justifyContent: 'center',
     alignItems: 'center',
@@ -254,6 +260,7 @@ const styles = StyleSheet.create({
   },
   errorMessage: {
     color: Colors.red,
+    textAlign: 'center',
   },
   successMessage: {
     color: Colors.green,
@@ -264,19 +271,5 @@ const styles = StyleSheet.create({
   },
   plusMinus: {
     marginHorizontal: 20,
-  },
-  btn: {
-    margin: 20,
-    backgroundColor: Colors.lightGrey,
-    padding: 10,
-    borderRadius: 5,
-    width: 200,
-    shadowOffset: { width: 10, height: 10 },
-    shadowColor: 'black',
-    shadowOpacity: 1.0,
-  },
-  btnText: {
-    fontSize: 16,
-    textAlign: 'center',
   },
 })
