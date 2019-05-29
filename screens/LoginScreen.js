@@ -51,7 +51,12 @@ export default class Login extends React.Component {
           loading: false,
           error: '',
         })
-        this.props.navigation.navigate('App')
+        const completedTutorial = await AsyncStorage.getItem(
+          '@completedTutorial'
+        )
+        this.props.navigation.navigate(
+          completedTutorial === 'true' ? 'App' : 'Tutorial'
+        )
       }
     } catch (e) {
       console.log('Error saving to async storage')
@@ -63,15 +68,14 @@ export default class Login extends React.Component {
   }
 
   render() {
-    const { email, loading, error } = this.state
+    const { loading, error } = this.state
     return (
       <View style={styles.container}>
         <Image
           source={require('../assets/images/logo.png')}
           style={styles.logo}
         />
-        <Button onPress={this.login} text="LOGIN WITH GOOGLE" />
-        <Text>{email}</Text>
+        <Button onPress={this.login} text="Login With Google" />
         {loading && <ActivityIndicator size="large" color={Colors.white} />}
         {error !== '' && error}
       </View>

@@ -5,7 +5,9 @@ import {
   Text,
   ActivityIndicator,
   AsyncStorage,
+  TouchableOpacity,
 } from 'react-native'
+import Icon from 'react-native-vector-icons/Ionicons'
 
 import Colors from '../constants/Colors'
 import Button from '../components/Button'
@@ -89,13 +91,29 @@ export default class HomeScreen extends React.Component {
               )}
               <View style={styles.mainButtons}>
                 <Button
-                  onPress={() => console.log('click')}
+                  onPress={() =>
+                    navigate('NewTournament', {
+                      updateList: this.getTournaments.bind(this),
+                    })
+                  }
                   text="New Tournament"
                 />
                 <Button
-                  onPress={() => console.log('click')}
+                  onPress={() =>
+                    navigate('JoinTournament', {
+                      updateList: this.getTournaments.bind(this),
+                    })
+                  }
                   text="Join Tournament"
                 />
+              </View>
+              <View style={styles.settingIconContainer}>
+                <TouchableOpacity
+                  style={styles.settingsTouchable}
+                  onPress={() => this.props.navigation.navigate('Settings')}
+                >
+                  <Icon name="md-settings" size={50} color={Colors.lightGrey} />
+                </TouchableOpacity>
               </View>
             </View>
           </View>
@@ -126,5 +144,14 @@ const styles = StyleSheet.create({
   },
   mainButtons: {
     marginTop: 20,
+  },
+  settingIconContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 20,
+  },
+  settingsTouchable: {
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 })

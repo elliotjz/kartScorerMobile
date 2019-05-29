@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, View, Text, Image } from 'react-native'
+import { StyleSheet, View, Text, Image, AsyncStorage } from 'react-native'
 import Swiper from 'react-native-swiper'
 
 import TutorialWelcome from '../components/TutorialWelcome'
@@ -11,7 +11,8 @@ export default class TutorialScreen extends React.Component {
     header: null,
   }
 
-  getStarted = () => {
+  getStarted = async () => {
+    await AsyncStorage.setItem('@completedTutorial', 'true')
     this.props.navigation.navigate('App')
   }
 

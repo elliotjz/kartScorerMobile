@@ -1,18 +1,17 @@
 import React from 'react'
 
-import { View, StyleSheet, Text, AsyncStorage } from 'react-native'
+import {
+  View,
+  StyleSheet,
+  Text,
+  AsyncStorage,
+  ActivityIndicator,
+  TouchableOpacity,
+} from 'react-native'
+import Icon from 'react-native-vector-icons/Ionicons'
 
 import Colors from '../constants/Colors'
 import Button from '../components/Button'
-
-let keys
-let production
-try {
-  keys = require('../keys')
-  production = false
-} catch (e) {
-  production = true
-}
 
 export default class Settings extends React.Component {
   static navigationOptions = {
@@ -64,10 +63,19 @@ export default class Settings extends React.Component {
     const { navigate } = this.props.navigation
     return (
       <View style={styles.container}>
+        <Text style={styles.text}>Signed in as:</Text>
+        <Text style={styles.text}>{email}</Text>
         <Button onPress={() => navigate('Tutorial')} text="Show Tutorial" />
         <Button onPress={this.logout} text="Logout" />
-        <Text>Signed in as {email}</Text>
-        {loading && <Text>Loading...</Text>}
+        <View style={styles.homeIconContainer}>
+          <TouchableOpacity
+            style={styles.homeTouchable}
+            onPress={() => this.props.navigation.navigate('App')}
+          >
+            <Icon name="md-home" size={50} color={Colors.lightGrey} />
+          </TouchableOpacity>
+        </View>
+        {loading && <ActivityIndicator size="large" color={Colors.primary} />}
         {error !== '' && error}
       </View>
     )
@@ -80,5 +88,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: Colors.white,
+  },
+  text: {
+    textAlign: 'center',
+    fontSize: 22,
+  },
+  homeIconContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 20,
+  },
+  homeTouchable: {
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 })
